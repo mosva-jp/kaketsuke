@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>民泊駆けつけ代行 by MOSVA（旅館業・民泊新法対応）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0f1a2b;
+    --ink-2:#1f2a3c;
+    --muted:#5a6577;
+    --line:#e7e3da;
+    --paper:#f6f2ea;
+    --paper-2:#efe9dc;
+    --white:#ffffff;
+    --accent:#e8542a;
+    --accent-ink:#b13b15;
+    --accent-soft:#fbe8df;
+    --gold:#c8a45c;
+    --green:#27c281;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans JP", system-ui, -apple-system, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"palt";
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  .en{font-family:"Inter", sans-serif}
+  .serif{font-family:"Noto Serif JP", serif}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .material-icons{font-family:"Material Icons" !important;font-weight:normal;font-style:normal;display:inline-block;line-height:1;text-transform:none;letter-spacing:normal;word-wrap:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 32px}
+
+  /* ============== reveal animations ============== */
+  .reveal{opacity:0; transform:translateY(40px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1; transform:none}
+  .reveal.delay-1{transition-delay:.1s} .reveal.delay-2{transition-delay:.2s} .reveal.delay-3{transition-delay:.3s} .reveal.delay-4{transition-delay:.4s}
+  .reveal-l{opacity:0; transform:translateX(-40px); transition:opacity .9s, transform .9s}
+  .reveal-l.in{opacity:1; transform:none}
+  .reveal-r{opacity:0; transform:translateX(40px); transition:opacity .9s, transform .9s}
+  .reveal-r.in{opacity:1; transform:none}
+  .reveal-scale{opacity:0; transform:scale(.9); transition:opacity .9s, transform .9s}
+  .reveal-scale.in{opacity:1; transform:none}
+
+  /* split text animation */
+  .split-char{display:inline-block; opacity:0; transform:translateY(.6em) rotate(6deg); transition:opacity .6s, transform .6s}
+  .split-char.in{opacity:1; transform:none}
+
+  /* ============== NAV ============== */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,242,234,.85);
+    backdrop-filter:saturate(140%) blur(12px);
+    -webkit-backdrop-filter:saturate(140%) blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700}
+  .logo-mark{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--ink); color:var(--paper);
+    display:grid;place-items:center;
+    font-family:"Noto Serif JP",serif;font-weight:900;font-size:18px;
+    position:relative;
+    transition:transform .4s cubic-bezier(.5,1.6,.5,1);
+  }
+  .logo:hover .logo-mark{transform:rotate(-12deg) scale(1.08)}
+  .logo-mark::after{
+    content:""; position:absolute; inset:-4px; border-radius:50%;
+    border:1px solid var(--ink); opacity:.3;
+    animation:slow-spin 18s linear infinite;
+  }
+  @keyframes slow-spin{to{transform:rotate(360deg)}}
+  .logo-txt{font-size:14px; letter-spacing:.04em}
+  .logo-txt small{display:block; font-size:10px; color:var(--muted); letter-spacing:.2em; font-weight:500}
+  .nav ul{display:flex;gap:28px;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)}
+  .nav ul a{position:relative; padding:4px 0}
+  .nav ul a::after{content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--accent); transition:width .3s}
+  .nav ul a:hover{color:var(--ink)}
+  .nav ul a:hover::after{width:100%}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 24px; border-radius:999px;
+    font-size:14px; font-weight:700; letter-spacing:.04em;
+    transition:transform .15s ease, box-shadow .2s ease, background .2s, color .2s;
+    cursor:pointer; border:0; position:relative; overflow:hidden;
+  }
+  .btn-primary{background:var(--accent); color:#fff}
+  .btn-primary:hover{background:var(--accent-ink); transform:translateY(-2px); box-shadow:0 14px 30px -10px rgba(232,84,42,.6)}
+  .btn-primary::before{
+    content:""; position:absolute; top:50%; left:50%; width:0;height:0;
+    background:rgba(255,255,255,.2); border-radius:50%;
+    transform:translate(-50%,-50%); transition:width .5s, height .5s;
+  }
+  .btn-primary:hover::before{width:300px;height:300px}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+  .btn-ghost:hover{background:var(--ink); color:var(--paper); transform:translateY(-2px)}
+  .btn .arr{width:16px;height:16px;display:inline-block; transition:transform .3s}
+  .btn:hover .arr{transform:translateX(4px)}
+
+  /* ============== HERO ============== */
+  .hero{position:relative; padding:80px 0 100px; overflow:hidden}
+  .hero::before{
+    content:""; position:absolute; top:-200px; right:-200px; width:600px; height:600px;
+    background:radial-gradient(circle, rgba(232,84,42,.08), transparent 60%);
+    border-radius:50%;
+    animation:float-bg 18s ease-in-out infinite;
+  }
+  .hero::after{
+    content:""; position:absolute; bottom:-200px; left:-200px; width:500px; height:500px;
+    background:radial-gradient(circle, rgba(200,164,92,.08), transparent 60%);
+    border-radius:50%;
+    animation:float-bg 22s ease-in-out infinite reverse;
+  }
+  @keyframes float-bg{
+    0%,100%{transform:translate(0,0)}
+    50%{transform:translate(40px,-30px)}
+  }
+  .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center; position:relative}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:12px; letter-spacing:.18em; font-weight:600; color:var(--accent-ink);
+    background:var(--accent-soft); padding:8px 16px; border-radius:999px;
+  }
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--accent); position:relative}
+  .eyebrow .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:var(--accent);opacity:.35;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{transform:scale(1);opacity:.4}70%{transform:scale(2.2);opacity:0}100%{opacity:0}}
+
+  h1.hero-title{
+    font-family:"Noto Serif JP", serif;
+    font-weight:900;
+    font-size:clamp(38px, 6vw, 80px);
+    line-height:1.08;
+    letter-spacing:-.01em;
+    margin:24px 0 0;
+  }
+  h1.hero-title .accent{color:var(--accent); position:relative; display:inline-block}
+  h1.hero-title .accent::before{
+    content:""; position:absolute; left:-2px; right:-2px; bottom:6px; height:14px;
+    background:var(--accent-soft); z-index:-1; border-radius:2px;
+    transform:scaleX(0); transform-origin:left;
+    animation:underline 1.2s 1s forwards cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes underline{to{transform:scaleX(1)}}
+  .hero-sub{
+    margin-top:28px; font-size:17px; color:var(--ink-2); max-width:520px;
+  }
+  .hero-cta{display:flex; gap:14px; margin-top:36px; flex-wrap:wrap}
+  .hero-meta{display:flex;gap:32px;margin-top:48px;border-top:1px solid var(--line);padding-top:24px;max-width:520px}
+  .hero-meta div small{display:block;font-size:11px;letter-spacing:.18em;color:var(--muted);font-weight:600}
+  .hero-meta div b{font-family:"Inter",sans-serif;font-size:32px;font-weight:700;color:var(--ink); display:block; margin-top:4px}
+  .hero-meta div b span{font-size:14px;color:var(--muted);margin-left:4px;font-weight:500}
+
+  /* hero visual */
+  .hero-visual{position:relative; height:560px}
+  .map-card{
+    position:absolute; inset:0;
+    background:var(--ink);
+    border-radius:24px; overflow:hidden;
+    box-shadow:0 30px 80px -30px rgba(15,26,43,.5);
+  }
+  .map-card .grid-lines{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation:grid-pan 30s linear infinite;
+  }
+  @keyframes grid-pan{to{background-position:40px 40px}}
+  .map-bg{position:absolute;inset:0;width:100%;height:100%;opacity:.18}
+  .pin{
+    position:absolute; width:36px; height:36px; border-radius:50%;
+    background:var(--accent); display:grid;place-items:center;
+    box-shadow:0 0 0 6px rgba(232,84,42,.2), 0 0 0 14px rgba(232,84,42,.08);
+    color:#fff; font-weight:700; font-size:13px;
+    animation:pin-bounce 2.4s ease-in-out infinite;
+  }
+  @keyframes pin-bounce{0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}}
+  .pin.alt{background:var(--gold); box-shadow:0 0 0 6px rgba(200,164,92,.2), 0 0 0 14px rgba(200,164,92,.08); animation-delay:.4s}
+  .pin.alt2{animation-delay:.8s}
+  .pin svg{width:16px;height:16px}
+  .ripple{position:absolute;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--accent);animation:ripple 2.4s infinite}
+  @keyframes ripple{0%{transform:scale(1);opacity:.7}100%{transform:scale(5);opacity:0}}
+
+  .floater{
+    position:absolute;
+    background:var(--paper);
+    border-radius:16px;
+    padding:14px 16px;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.35);
+    animation:floater-in 1s .5s both cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes floater-in{from{opacity:0; transform:translateY(20px) scale(.92)} to{opacity:1; transform:none}}
+  .floater.top-card{top:24px; left:24px; right:24px; display:flex; align-items:center; justify-content:space-between}
+  .floater.top-card .live{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600}
+  .floater.top-card .live::before{content:"";width:8px;height:8px;border-radius:50%;background:#27c281;box-shadow:0 0 0 4px rgba(39,194,129,.25);animation:pulse 1.6s infinite}
+  .floater.top-card .time{font-family:"Inter",sans-serif;font-size:12px;color:var(--muted)}
+  .floater.alert{bottom:24px; left:24px; width:280px; animation-delay:.8s}
+  .floater.alert .head{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--accent-ink);font-weight:700;letter-spacing:.1em}
+  .floater.alert .head::before{content:"●";color:var(--accent);font-size:8px; animation:pulse 1.6s infinite}
+  .floater.alert h4{margin:8px 0 4px;font-size:14px;line-height:1.4}
+  .floater.alert p{margin:0;font-size:12px;color:var(--muted)}
+  .floater.alert .progress{margin-top:10px;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+  .floater.alert .progress::after{content:"";display:block;height:100%;width:0;background:var(--accent);border-radius:2px; animation:progress-fill 4s 1.5s forwards ease-out}
+  @keyframes progress-fill{to{width:62%}}
+  .floater.alert .progress-meta{display:flex;justify-content:space-between;font-size:10px;font-family:"Inter",sans-serif;color:var(--muted);margin-top:6px;letter-spacing:.05em}
+  .floater.eta{
+    bottom:24px; right:24px; width:200px; text-align:center;
+    background:var(--accent); color:#fff;
+    animation-delay:1.1s;
+  }
+  .floater.eta small{font-size:10px;letter-spacing:.18em;font-weight:700;opacity:.9}
+  .floater.eta b{display:block;font-family:"Inter",sans-serif;font-weight:800;font-size:46px;line-height:1;margin:6px 0 2px}
+  .floater.eta b span{font-size:18px;font-weight:600;margin-left:2px}
+  .floater.eta p{margin:0;font-size:11px;opacity:.92}
+
+  /* ============== marquee ============== */
+  .marquee{
+    overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:18px 0; background:var(--paper-2);
+  }
+  .marquee-track{display:flex; gap:48px; animation:marquee 28s linear infinite; white-space:nowrap}
+  @keyframes marquee{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+  .marquee-track span{display:inline-flex; align-items:center; gap:14px; font-size:14px; color:var(--ink); font-weight:600; letter-spacing:.04em}
+  .marquee-track span::before{content:"●"; color:var(--accent); font-size:8px}
+
+  /* ============== PROBLEM ============== */
+  section{padding:120px 0; position:relative}
+  .section-eyebrow{
+    display:flex; align-items:center; gap:14px;
+    font-size:11px; letter-spacing:.24em; font-weight:700; color:var(--muted);
+    margin-bottom:20px;
+  }
+  .section-eyebrow::before{content:""; width:32px; height:1px; background:var(--ink); transition:width .6s}
+  .reveal.in .section-eyebrow::before{width:80px}
+  .section-title{
+    font-family:"Noto Serif JP",serif;
+    font-weight:900;
+    font-size:clamp(32px, 4.5vw, 56px);
+    line-height:1.18;
+    letter-spacing:-.005em;
+    margin:0 0 24px;
+  }
+  .section-lede{font-size:16px; color:var(--ink-2); max-width:640px; margin:0}
+
+  .problem{background:var(--ink); color:var(--paper); overflow:hidden}
+  .problem::before{
+    content:""; position:absolute; top:0; right:0; width:600px;height:600px;
+    background:radial-gradient(circle, rgba(232,84,42,.18), transparent 60%);
+    animation:float-bg 14s ease-in-out infinite;
+  }
+  .problem .section-eyebrow{color:#9aa3b2}
+  .problem .section-eyebrow::before{background:var(--paper)}
+  .problem .section-lede{color:#c5cad3}
+  .problem-grid{
+    margin-top:64px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  }
+  .pcard{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:32px 28px 36px;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), background .3s, border-color .3s;
+    position:relative; overflow:hidden;
+  }
+  .pcard::before{
+    content:""; position:absolute; top:-2px; left:-2px; right:-2px; height:3px;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform:translateX(-100%);
+    transition:transform .8s;
+  }
+  .pcard:hover{background:rgba(255,255,255,.08); transform:translateY(-6px); border-color:rgba(232,84,42,.4)}
+  .pcard:hover::before{transform:translateX(100%)}
+  .pcard .num{font-family:"Inter",sans-serif; font-size:11px; letter-spacing:.2em; font-weight:600; color:var(--gold)}
+  .pcard h3{font-family:"Noto Serif JP",serif; font-weight:700; font-size:22px; line-height:1.5; margin:14px 0 16px}
+  .pcard ul{list-style:none; padding:0; margin:0; font-size:13px; color:#9aa3b2}
+  .pcard ul li{padding:8px 0; display:flex; gap:8px; align-items:flex-start; line-height:1.7}
+  .pcard ul li::before{content:""; flex-shrink:0; width:14px; height:1px; background:var(--accent); margin-top:12px}
+  .pcard .ico{
+    width:48px;height:48px;border-radius:14px;
+    background:rgba(232,84,42,.15); display:grid;place-items:center;
+    margin-bottom:24px;
+    transition:transform .4s;
+  }
+  .pcard:hover .ico{transform:rotate(-8deg) scale(1.08)}
+  .pcard .ico .material-icons{color:var(--accent); font-size:24px}
+
+  .problem-cta{margin-top:64px; text-align:center}
+  .problem-cta .big{
+    font-family:"Noto Serif JP",serif; font-weight:900;
+    font-size:clamp(28px, 4vw, 48px); line-height:1.4;
+    margin:0 0 24px;
+  }
+  .problem-cta .big em{color:var(--accent); font-style:normal; position:relative; display:inline-block}
+  .problem-cta .big em::after{
+    content:""; position:absolute; left:0; right:0; bottom:-6px; height:3px;
+    background:var(--accent);
+  }
+
+  /* ============== SERVICE ============== */
+  .service{background:var(--paper)}
+  .service-grid{
+    margin-top:64px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  }
+  .scard{
+    background:var(--white); border-radius:18px; padding:32px 28px;
+    border:1px solid var(--line);
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s;
+    position:relative; overflow:hidden;
+  }
+  .scard:hover{transform:translateY(-8px); box-shadow:0 24px 50px -24px rgba(15,26,43,.2); border-color:var(--accent)}
+  .scard .ico{
+    width:64px;height:64px;border-radius:16px;
+    background:linear-gradient(135deg, var(--accent-soft), var(--paper-2));
+    display:grid;place-items:center;
+    margin-bottom:24px;
+    transition:transform .5s cubic-bezier(.5,1.6,.5,1);
+  }
+  .scard:hover .ico{transform:rotate(-8deg) scale(1.08); background:var(--accent)}
+  .scard .ico .material-icons{font-size:30px; color:var(--accent); transition:color .3s}
+  .scard:hover .ico .material-icons{color:#fff}
+  .scard h4{font-family:"Noto Serif JP",serif; font-size:20px; font-weight:700; margin:0 0 8px; line-height:1.5}
+  .scard .num{font-family:"Inter",sans-serif; font-size:11px; letter-spacing:.2em; color:var(--accent); font-weight:700}
+
+  /* ============== PRICING ============== */
+  .pricing{background:var(--paper-2); overflow:hidden}
+  .price-grid{display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:64px}
+  .price{
+    background:var(--white); border-radius:24px; padding:48px 40px;
+    border:1px solid var(--line); position:relative;
+    transition:transform .4s, box-shadow .4s;
+  }
+  .price:hover{transform:translateY(-6px); box-shadow:0 30px 60px -30px rgba(15,26,43,.25)}
+  .price.feature{
+    background:var(--ink); color:var(--paper); border-color:var(--ink);
+    transform:scale(1.02);
+  }
+  .price.feature:hover{transform:scale(1.02) translateY(-6px)}
+  .price.feature::before{
+    content:""; position:absolute; inset:0; border-radius:24px;
+    background:linear-gradient(135deg, rgba(232,84,42,.18), transparent 50%);
+    pointer-events:none;
+  }
+  .price .tag{
+    font-family:"Inter",sans-serif; font-size:11px; letter-spacing:.22em;
+    font-weight:700; color:var(--accent); display:inline-block;
+  }
+  .price.feature .tag{color:var(--gold)}
+  .price h3{font-family:"Noto Serif JP",serif; font-size:30px; font-weight:900; margin:12px 0 8px}
+  .price .desc{font-size:13px; color:var(--muted); margin:0 0 28px}
+  .price.feature .desc{color:#c5cad3}
+  .price .amount{
+    border-top:1px solid var(--line); padding-top:28px;
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .price.feature .amount{border-top-color:rgba(255,255,255,.15)}
+  .price .amount .label{font-size:14px; color:var(--muted); margin-right:4px}
+  .price.feature .amount .label{color:#9aa3b2}
+  .price .amount .num{font-family:"Inter",sans-serif; font-weight:800; font-size:60px; line-height:1; letter-spacing:-.03em}
+  .price .amount .yen{font-family:"Noto Sans JP",sans-serif; font-size:18px; font-weight:700; margin-left:2px}
+  .price .amount .unit{font-size:12px; color:var(--muted); margin-left:4px}
+  .price.feature .amount .unit{color:#9aa3b2}
+  .price .save{
+    margin-top:8px; font-size:12px; color:var(--accent); font-weight:700; letter-spacing:.06em;
+  }
+  .price.feature .save{color:var(--gold)}
+  .price ul{list-style:none;padding:0;margin:24px 0 32px;font-size:14px}
+  .price ul li{padding:12px 0;border-bottom:1px dashed var(--line); display:flex; gap:12px; align-items:flex-start}
+  .price.feature ul li{border-bottom-color:rgba(255,255,255,.12)}
+  .price ul li .material-icons{font-size:20px; color:var(--accent); flex-shrink:0; margin-top:1px}
+  .price.feature ul li .material-icons{color:var(--gold)}
+  .price .ribbon{
+    position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+    background:var(--accent); color:#fff;
+    padding:8px 18px; border-radius:999px;
+    font-size:12px; letter-spacing:.15em; font-weight:700;
+    box-shadow:0 8px 20px -8px rgba(232,84,42,.6);
+  }
+  .price-notes{
+    margin-top:48px;
+    background:var(--white); border-radius:16px; border:1px solid var(--line);
+    padding:28px 32px;
+    font-size:13px; color:var(--ink-2); line-height:2;
+  }
+  .price-notes h5{margin:0 0 12px; font-size:13px; letter-spacing:.18em; color:var(--accent-ink); font-weight:700}
+  .price-notes ul{list-style:none; padding:0; margin:0}
+  .price-notes ul li{padding-left:18px; position:relative}
+  .price-notes ul li::before{content:"・"; position:absolute; left:0; color:var(--accent)}
+
+  /* ============== FAQ ============== */
+  .faq{background:var(--paper)}
+  .faq-list{margin-top:48px; max-width:880px}
+  .qa{border-bottom:1px solid var(--line); padding:0}
+  .qa summary{
+    list-style:none; cursor:pointer; padding:24px 0;
+    display:flex; gap:16px; align-items:flex-start;
+    font-size:17px; font-weight:700; line-height:1.6;
+    transition:color .2s;
+  }
+  .qa:hover summary{color:var(--accent)}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .q{
+    font-family:"Noto Serif JP",serif; color:var(--accent);
+    font-weight:900; font-size:22px; flex-shrink:0; line-height:1.3;
+  }
+  .qa summary .toggle{
+    margin-left:auto; flex-shrink:0; color:var(--muted);
+    width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
+    display:grid; place-items:center; transition:transform .3s, background .2s;
+    font-size:18px;
+  }
+  .qa[open] summary .toggle{transform:rotate(45deg); background:var(--accent); color:#fff; border-color:var(--accent)}
+  .qa .a{
+    padding:0 0 28px 38px;
+    color:var(--ink-2); font-size:14px; line-height:1.9;
+    animation:fade-up .4s ease;
+  }
+  @keyframes fade-up{from{opacity:0; transform:translateY(-4px)} to{opacity:1; transform:none}}
+
+  /* ============== CTA ============== */
+  .cta-final{background:var(--accent); color:#fff; padding:120px 0; position:relative; overflow:hidden}
+  .cta-final::before{
+    content:"駆けつけ"; position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-family:"Noto Serif JP",serif; font-weight:900;
+    font-size:clamp(180px, 28vw, 420px); line-height:1;
+    color:rgba(255,255,255,.07); white-space:nowrap; pointer-events:none;
+    letter-spacing:-.04em;
+    animation:slide-text 24s linear infinite;
+  }
+  @keyframes slide-text{from{transform:translate(-50%,-50%)} to{transform:translate(-30%,-50%)}}
+  .cta-final-inner{position:relative; text-align:center; max-width:780px; margin:0 auto}
+  .cta-final h2{
+    font-family:"Noto Serif JP",serif; font-weight:900;
+    font-size:clamp(36px, 5vw, 64px); line-height:1.25; margin:0 0 24px;
+  }
+  .cta-final p{font-size:16px; opacity:.95; max-width:560px; margin:0 auto 40px}
+  .cta-final .hero-cta{justify-content:center}
+  .cta-final .btn-primary{background:#fff; color:var(--accent)}
+  .cta-final .btn-primary:hover{background:var(--ink); color:#fff}
+  .cta-final .btn-ghost{border-color:#fff; color:#fff}
+  .cta-final .btn-ghost:hover{background:#fff; color:var(--accent)}
+
+  /* ============== RELATED ============== */
+  .related{background:var(--paper); padding:96px 0}
+  .related-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px}
+  .rcard{
+    background:var(--white); border-radius:20px; padding:32px;
+    border:1px solid var(--line);
+    transition:transform .3s, box-shadow .3s;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .rcard:hover{transform:translateY(-6px); box-shadow:0 24px 50px -24px rgba(15,26,43,.2)}
+  .rcard h5{font-family:"Noto Serif JP",serif; font-weight:700; font-size:18px; margin:0; line-height:1.5}
+  .rcard p{font-size:13px; color:var(--muted); margin:0; line-height:1.8; flex:1}
+  .rcard .tags{font-size:11px; color:var(--accent); font-weight:600; letter-spacing:.04em}
+  .rcard .more{display:inline-flex; gap:6px; align-items:center; font-size:13px; font-weight:700; color:var(--ink)}
+  .rcard .more .material-icons{font-size:16px; transition:transform .3s}
+  .rcard:hover .more .material-icons{transform:translate(2px,-2px)}
+
+  /* ============== FOOTER ============== */
+  footer{background:#08111f; color:#9aa3b2; padding:64px 0 32px}
+  .foot-grid{display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:48px}
+  footer h6{color:var(--paper); font-size:12px; letter-spacing:.16em; margin:0 0 16px; font-weight:700}
+  footer ul{list-style:none;padding:0;margin:0;font-size:13px;line-height:2.4}
+  footer ul a{transition:color .2s}
+  footer ul a:hover{color:var(--paper)}
+  .foot-bottom{margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#5f6877; flex-wrap:wrap; gap:12px}
+
+  /* ============== CHATBOT ============== */
+  .chat-fab{
+    position:fixed; bottom:28px; right:28px; z-index:80;
+    width:64px; height:64px; border-radius:50%;
+    background:var(--accent); color:#fff;
+    display:grid; place-items:center; cursor:pointer;
+    box-shadow:0 16px 40px -10px rgba(232,84,42,.55);
+    border:0; transition:transform .3s, background .2s;
+  }
+  .chat-fab:hover{transform:scale(1.06)}
+  .chat-fab .material-icons{font-size:28px}
+  .chat-fab::after{
+    content:""; position:absolute; inset:-6px; border-radius:50%;
+    border:2px solid var(--accent); opacity:.5; animation:ripple 2.4s infinite;
+  }
+  .chat-fab.open .ico-chat{display:none}
+  .chat-fab .ico-close{display:none}
+  .chat-fab.open .ico-close{display:inline-block}
+
+  .chat-panel{
+    position:fixed; bottom:108px; right:28px; z-index:79;
+    width:380px; max-width:calc(100vw - 32px);
+    height:560px; max-height:calc(100vh - 140px);
+    background:var(--white);
+    border-radius:20px; overflow:hidden;
+    box-shadow:0 30px 80px -20px rgba(15,26,43,.4);
+    display:none; flex-direction:column;
+    transform:translateY(20px) scale(.96); opacity:0;
+    transition:transform .3s cubic-bezier(.2,.7,.2,1), opacity .3s;
+  }
+  .chat-panel.open{display:flex; transform:none; opacity:1}
+  .chat-head{
+    background:var(--ink); color:var(--paper); padding:18px 22px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .chat-head .av{width:40px; height:40px; border-radius:50%; background:var(--accent); display:grid;place-items:center; font-family:"Noto Serif JP",serif; font-weight:900; font-size:18px}
+  .chat-head .info b{display:block; font-size:14px}
+  .chat-head .info small{font-size:11px; color:#9aa3b2; display:flex; align-items:center; gap:6px}
+  .chat-head .info small::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--green)}
+  .chat-body{
+    flex:1; padding:18px; overflow-y:auto;
+    background:var(--paper); display:flex; flex-direction:column; gap:12px;
+  }
+  .msg{max-width:80%; padding:10px 14px; border-radius:14px; font-size:13px; line-height:1.65; animation:msg-in .4s ease}
+  @keyframes msg-in{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+  .msg.bot{background:var(--white); border:1px solid var(--line); align-self:flex-start; border-top-left-radius:4px}
+  .msg.user{background:var(--accent); color:#fff; align-self:flex-end; border-top-right-radius:4px}
+  .msg.typing{background:var(--white); border:1px solid var(--line); align-self:flex-start; border-top-left-radius:4px; display:inline-flex; gap:4px; padding:14px}
+  .msg.typing span{width:6px; height:6px; border-radius:50%; background:var(--muted); animation:typing 1.2s infinite}
+  .msg.typing span:nth-child(2){animation-delay:.15s}
+  .msg.typing span:nth-child(3){animation-delay:.3s}
+  @keyframes typing{0%,100%{opacity:.3; transform:translateY(0)} 50%{opacity:1; transform:translateY(-4px)}}
+  .quick{display:flex; flex-wrap:wrap; gap:8px; padding:12px 18px; background:var(--paper); border-top:1px solid var(--line)}
+  .quick button{
+    background:var(--white); border:1px solid var(--line);
+    padding:8px 12px; border-radius:999px; cursor:pointer;
+    font-size:12px; color:var(--ink); transition:all .2s; font-family:inherit;
+  }
+  .quick button:hover{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .chat-input{
+    display:flex; gap:8px; padding:14px 18px; border-top:1px solid var(--line); background:var(--white);
+  }
+  .chat-input input{
+    flex:1; border:1px solid var(--line); border-radius:999px;
+    padding:10px 16px; font-size:13px; font-family:inherit; outline:none;
+    transition:border-color .2s;
+  }
+  .chat-input input:focus{border-color:var(--accent)}
+  .chat-input button{
+    width:40px; height:40px; border-radius:50%; border:0;
+    background:var(--accent); color:#fff; cursor:pointer;
+    display:grid; place-items:center; transition:background .2s;
+  }
+  .chat-input button:hover{background:var(--accent-ink)}
+
+  /* responsive */
+  @media (max-width: 960px){
+    .hero-grid{grid-template-columns:1fr; gap:48px}
+    .hero-visual{height:480px}
+    .problem-grid{grid-template-columns:1fr}
+    .service-grid{grid-template-columns:1fr 1fr}
+    .price-grid{grid-template-columns:1fr}
+    .price.feature{transform:none}
+    .related-grid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr; gap:32px}
+    .nav ul{display:none}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 20px}
+    .service-grid{grid-template-columns:1fr}
+    section{padding:80px 0}
+    .hero{padding:40px 0 64px}
+    .hero-meta{flex-wrap:wrap; gap:20px}
+    .floater.alert{width:220px}
+    .floater.eta{width:160px}
+    .chat-panel{right:12px; bottom:96px; height:500px}
+    .chat-fab{right:16px; bottom:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============= NAV ============= -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#">
+      <span class="logo-mark">駆</span>
+      <span class="logo-txt">
+        民泊駆けつけ代行 by MOSVA
+        <small>EMERGENCY DISPATCH SERVICE</small>
+      </span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#">ホーム</a></li>
+        <li><a href="#service">サービス</a></li>
+        <li><a href="#price">料金</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary" href="#contact">お問い合わせ
+      <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- ============= HERO ============= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow reveal"><span class="dot"></span>旅館業・民泊新法対応 ／ 24時間365日</span>
+        <h1 class="hero-title">
+          <span data-split>民泊 / 旅館業の</span><br/>
+          <span class="accent" data-split>駆けつけ問題</span><span data-split>を解決！</span>
+        </h1>
+        <p class="hero-sub reveal delay-2">
+          保健所要件、駆けつけ要員の確保、現場での一次対応——<br/>
+          民泊・旅館業に避けて通れない「駆けつけ」の悩みを、MOSVAがまるごと引き受けます。
+        </p>
+        <div class="hero-cta reveal delay-3">
+          <a class="btn btn-primary" href="#contact">お問い合わせ
+            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#service">サービスを見る</a>
+        </div>
+        <div class="hero-meta reveal delay-4">
+          <div>
+            <small>RESPONSE</small>
+            <b><span class="count" data-to="180">0</span><span>分以内</span></b>
+          </div>
+          <div>
+            <small>OPERATING</small>
+            <b><span class="count" data-to="24">0</span><span>/7</span></b>
+          </div>
+          <div>
+            <small>FROM</small>
+            <b>¥<span class="count" data-to="8500">0</span><span>/月〜</span></b>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal-r">
+        <div class="map-card">
+          <div class="grid-lines"></div>
+          <svg class="map-bg" viewBox="0 0 400 560" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#c8a45c"/>
+              </pattern>
+            </defs>
+            <path d="M0 320 Q 100 280 180 310 T 400 290 L 400 560 L 0 560 Z" fill="url(#dots)" opacity=".4"/>
+            <path d="M40 80 L 120 60 L 200 100 L 280 70 L 360 110" stroke="#c8a45c" stroke-width="1" fill="none" opacity=".5"/>
+            <path d="M60 200 Q 160 240 240 200 T 380 220" stroke="#e8542a" stroke-width="1" fill="none" stroke-dasharray="4 6" opacity=".7"/>
+          </svg>
+
+          <div class="floater top-card">
+            <div class="live">LIVE DISPATCH</div>
+            <div class="time">JST 02:47</div>
+          </div>
+
+          <div class="ripple" style="top:36%; left:40%"></div>
+          <div class="pin" style="top:36%; left:40%">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/></svg>
+          </div>
+          <div class="pin alt" style="top:18%; right:24%">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="pin alt alt2" style="bottom:36%; left:18%">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+
+          <div class="floater alert">
+            <div class="head">INCOMING&nbsp;&nbsp;01:42</div>
+            <h4>物件A／鍵が開かない</h4>
+            <p>スタッフを派遣中</p>
+            <div class="progress"></div>
+            <div class="progress-meta"><span>DISPATCHED</span><span>ON THE WAY</span></div>
+          </div>
+
+          <div class="floater eta">
+            <small>RESPONSE TIME</small>
+            <b>180<span>min</span></b>
+            <p>180分以内に駆けつけ</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= MARQUEE ============= -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>旅館業対応</span><span>民泊新法対応</span><span>保健所要件クリア</span><span>名義登録代行</span><span>24時間対応</span><span>180分以内駆けつけ</span><span>月額8,500円〜</span>
+    <span>旅館業対応</span><span>民泊新法対応</span><span>保健所要件クリア</span><span>名義登録代行</span><span>24時間対応</span><span>180分以内駆けつけ</span><span>月額8,500円〜</span>
+  </div>
+</div>
+
+<!-- ============= PROBLEM ============= -->
+<section class="problem">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-eyebrow">PROBLEM&nbsp;/&nbsp;01</div>
+      <h2 class="section-title">こんなお悩みは<br/>ありませんか？</h2>
+    </div>
+
+    <div class="problem-grid">
+      <div class="pcard reveal delay-1">
+        <div class="ico"><span class="material-icons">badge</span></div>
+        <span class="num">01</span>
+        <h3>保健所要件を<br/>クリアできない</h3>
+        <ul>
+          <li>駆けつけ要員の名義登録や立ち合い面談の了承が得られない</li>
+          <li>徒歩10分や2名体制などの条件を満たせない（自治体基準）</li>
+        </ul>
+      </div>
+      <div class="pcard reveal delay-2">
+        <div class="ico"><span class="material-icons">directions_run</span></div>
+        <span class="num">02</span>
+        <h3>動ける"駆けつけ<br/>スタッフ"がいない</h3>
+        <ul>
+          <li>候補者はいるが実際に駆けつけれる人がいない</li>
+          <li>駆けつけスタッフはいるものの実際に駆けつけてくれるか不安</li>
+        </ul>
+      </div>
+      <div class="pcard reveal delay-3">
+        <div class="ico"><span class="material-icons">star_border</span></div>
+        <span class="num">03</span>
+        <h3>対応が遅れて<br/>レビューが悪くなった</h3>
+        <ul>
+          <li>鍵 / ブレーカー / 給湯 / 排水などの一次対応が遅れ星2がついた</li>
+          <li>空室期間後の事前チェック不足で埃やにおいのクレームが発生した</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="problem-cta reveal">
+      <p class="big">すべて<em>民泊駆けつけサービス</em>で解決!!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= SERVICE ============= -->
+<section class="service" id="service">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-eyebrow">SERVICE&nbsp;/&nbsp;02</div>
+      <h2 class="section-title">サービス内容</h2>
+      <p class="section-lede">必要な現場対応をひととおり、ワンパッケージで。</p>
+    </div>
+
+    <div class="service-grid">
+      <div class="scard reveal delay-1">
+        <div class="ico"><span class="material-icons">security</span></div>
+        <span class="num">01</span>
+        <h4>施錠・防犯確認</h4>
+      </div>
+      <div class="scard reveal delay-2">
+        <div class="ico"><span class="material-icons">delete_sweep</span></div>
+        <span class="num">02</span>
+        <h4>応急の簡易清掃</h4>
+      </div>
+      <div class="scard reveal delay-3">
+        <div class="ico"><span class="material-icons">water_damage</span></div>
+        <span class="num">03</span>
+        <h4>水漏れ・軽微な<br/>電気トラブル</h4>
+      </div>
+      <div class="scard reveal delay-1">
+        <div class="ico"><span class="material-icons">inventory_2</span></div>
+        <span class="num">04</span>
+        <h4>備品補充</h4>
+      </div>
+      <div class="scard reveal delay-2">
+        <div class="ico"><span class="material-icons">support_agent</span></div>
+        <span class="num">05</span>
+        <h4>クレームへの<br/>現場対応</h4>
+      </div>
+      <div class="scard reveal delay-3">
+        <div class="ico"><span class="material-icons">swap_horiz</span></div>
+        <span class="num">06</span>
+        <h4>保健所へ名義登録</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= PRICING ============= -->
+<section class="pricing" id="price">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-eyebrow">PRICE&nbsp;/&nbsp;03</div>
+      <h2 class="section-title">料金プラン</h2>
+    </div>
+
+    <div class="price-grid">
+      <div class="price reveal-l">
+        <span class="tag">MONTHLY</span>
+        <h3>月額プラン</h3>
+        <p class="desc">毎月のお支払いで気軽にスタートできるプラン。</p>
+        <div class="amount">
+          <span class="label">月額</span>
+          <span class="num en">8,500</span>
+          <span class="yen">円</span>
+          <span class="unit">(税込)</span>
+        </div>
+        <ul>
+          <li><span class="material-icons">check_circle</span>初回登録料 12,000円 / 部屋</li>
+          <li><span class="material-icons">check_circle</span>月に1回まで駆けつけ無料</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">お申し込みはこちら</a>
+      </div>
+
+      <div class="price feature reveal-r">
+        <span class="ribbon">⭐️ おすすめ</span>
+        <span class="tag">YEARLY</span>
+        <h3>年払いプラン</h3>
+        <p class="desc">月額費用を12ヶ月まとめてお支払い。経費処理も楽に。</p>
+        <div class="amount">
+          <span class="label" style="color:#9aa3b2">年額</span>
+          <span class="num en">92,000</span>
+          <span class="yen">円</span>
+          <span class="unit">(税込)</span>
+        </div>
+        <p class="save">月あたり約7,667円｜年間10,000円お得</p>
+        <ul>
+          <li><span class="material-icons">check_circle</span>月額費用を12ヶ月まとめてお支払い</li>
+          <li><span class="material-icons">check_circle</span>経費処理は年1回のみ。</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">お申し込みはこちら
+          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="price-notes reveal">
+      <h5>NOTES&nbsp;/&nbsp;ご注意事項</h5>
+      <ul>
+        <li>料金は全て税込み表示となります。</li>
+        <li>お支払いはクレジットカードのみとなります（月額料金もクレジット自動引き落としとなります）</li>
+        <li>深夜帯(22時～06時)は、別途税込3,300円が必要です。</li>
+        <li>月2回目以降の駆けつけは5,500円/回で対応いたします。</li>
+        <li>180分以内に駆けつけスタッフをご用意できない場合は、その月の月額費用を全額返金いたします。</li>
+        <li>初回登録料は同一集合住宅3室まで有効です。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============= FAQ ============= -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-eyebrow">FAQ&nbsp;/&nbsp;04</div>
+      <h2 class="section-title">よくある質問</h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="qa reveal" open>
+        <summary>
+          <span class="q">Q.</span>
+          <span>連絡からどれくらいで到着しますか？</span>
+          <span class="toggle">＋</span>
+        </summary>
+        <div class="a">ご連絡から180分以内に駆けつけスタッフを現場に派遣します。万が一180分以内にスタッフをご用意できない場合は、その月の月額費用を全額返金いたします。</div>
+      </details>
+      <details class="qa reveal">
+        <summary>
+          <span class="q">Q.</span>
+          <span>どこまで対応してくれますか？</span>
+          <span class="toggle">＋</span>
+        </summary>
+        <div class="a">施錠・防犯確認、応急の簡易清掃、水漏れや軽微な電気トラブル、備品補充、クレームへの現場対応、保健所への名義登録までワンパッケージで対応いたします。</div>
+      </details>
+      <details class="qa reveal">
+        <summary>
+          <span class="q">Q.</span>
+          <span>追加費用はどのように支払えば良い？</span>
+          <span class="toggle">＋</span>
+        </summary>
+        <div class="a">深夜帯（22時〜06時）の対応は別途税込3,300円、月2回目以降の駆けつけは1回5,500円で承ります。すべてご登録のクレジットカードから自動でお支払いいただけます。</div>
+      </details>
+      <details class="qa reveal">
+        <summary>
+          <span class="q">Q.</span>
+          <span>保健所の要件（名義登録・面談・距離要件）は対応できますか？</span>
+          <span class="toggle">＋</span>
+        </summary>
+        <div class="a">はい、駆けつけ要員としての名義登録、立ち合い面談、徒歩10分や2名体制などの自治体基準にも対応しております。物件所在地の自治体ごとに最適な体制をご提案いたします。</div>
+      </details>
+      <details class="qa reveal">
+        <summary>
+          <span class="q">Q.</span>
+          <span>対応地域はどこですか？</span>
+          <span class="toggle">＋</span>
+        </summary>
+        <div class="a">対応エリアについてはお問い合わせください。物件所在地によってご対応可否が異なりますので、お気軽にお問い合わせフォームよりご相談ください。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============= CTA ============= -->
+<section class="cta-final" id="contact">
+  <div class="wrap cta-final-inner">
+    <div class="section-eyebrow reveal" style="color:rgba(255,255,255,.8); justify-content:center; display:inline-flex">CONTACT</div>
+    <h2 class="reveal">お問い合わせ</h2>
+    <p class="reveal delay-1">サービスの質問やご相談は以下からお願いいたします。</p>
+    <div class="hero-cta reveal delay-2">
+      <a class="btn btn-primary" href="#">お問い合わせはこちらから
+        <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= RELATED ============= -->
+<section class="related">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-eyebrow">RELATED&nbsp;/&nbsp;05</div>
+      <h2 class="section-title" style="font-size:36px">関連サービス</h2>
+    </div>
+
+    <div class="related-grid">
+      <div class="rcard reveal delay-1">
+        <span class="tags">#運営代行 #清掃 #駆けつけ代行</span>
+        <h5>サービス一覧</h5>
+        <p>株式会社MOSVAが運営する民泊関連サービス一覧を見る。</p>
+        <a class="more" href="#">詳しく見る <span class="material-icons">call_made</span></a>
+      </div>
+      <div class="rcard reveal delay-2">
+        <span class="tags">#チャット相談 #オンライン相談</span>
+        <h5>民泊相談LINE</h5>
+        <p>民泊の"困った"を解決する無料相談LINE。</p>
+        <a class="more" href="#">詳しく見る <span class="material-icons">call_made</span></a>
+      </div>
+      <div class="rcard reveal delay-3">
+        <span class="tags">#民泊運営 #おすすめ商品</span>
+        <h5>民泊に使えるおすすめ商品</h5>
+        <p>民泊運営で実際に使って良かった、コスパと使いやすさ重視の商品リストです。</p>
+        <a class="more" href="#">詳しく見る <span class="material-icons">call_made</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= FOOTER ============= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#" style="color:var(--paper)">
+          <span class="logo-mark" style="background:var(--paper); color:var(--ink)">駆</span>
+          <span class="logo-txt">
+            民泊駆けつけ代行 by MOSVA
+            <small>EMERGENCY DISPATCH SERVICE</small>
+          </span>
+        </a>
+        <p style="font-size:13px; max-width:340px; margin-top:20px; line-height:1.8">
+          旅館業・民泊新法対応の駆けつけ代行サービス。<br/>
+          株式会社MOSVAが運営しています。
+        </p>
+      </div>
+      <div>
+        <h6>MENU</h6>
+        <ul>
+          <li><a href="#">ホーム</a></li>
+          <li><a href="#service">サービス</a></li>
+          <li><a href="#price">料金</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>COMPANY</h6>
+        <ul>
+          <li><a href="#">運営会社</a></li>
+          <li><a href="#">プライバシーポリシー</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>CONTACT</h6>
+        <ul>
+          <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="en">©2025 MOSVA, Inc.</span>
+      <span class="en">EMERGENCY DISPATCH · TOKYO · JP</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============= CHATBOT ============= -->
+<button class="chat-fab" id="chatFab" aria-label="チャットを開く">
+  <span class="material-icons ico-chat">chat</span>
+  <span class="material-icons ico-close">close</span>
+</button>
+
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="サービスチャット">
+  <div class="chat-head">
+    <div class="av">駆</div>
+    <div class="info">
+      <b>MOSVAサポート</b>
+      <small>オンライン・通常 1分以内に返信</small>
+    </div>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="quick" id="chatQuick">
+    <button data-q="料金プランは？">料金プランは？</button>
+    <button data-q="対応エリアはどこですか？">対応エリア</button>
+    <button data-q="どこまで対応してくれますか？">対応範囲</button>
+    <button data-q="保健所要件は対応できますか？">保健所要件</button>
+    <button data-q="深夜の対応もできますか？">深夜対応</button>
+  </div>
+  <form class="chat-input" id="chatForm" autocomplete="off">
+    <input id="chatInput" type="text" placeholder="質問を入力してください..." />
+    <button type="submit" aria-label="送信"><span class="material-icons" style="font-size:18px">send</span></button>
+  </form>
+</div>
+
+<script>
+  /* ============== reveal on scroll ============== */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-scale').forEach(el=>io.observe(el));
+
+  /* ============== split text in hero ============== */
+  document.querySelectorAll('[data-split]').forEach(el=>{
+    const text = el.textContent;
+    el.textContent = '';
+    [...text].forEach((ch, i)=>{
+      const s = document.createElement('span');
+      s.className = 'split-char';
+      s.textContent = ch === ' ' ? '\u00A0' : ch;
+      s.style.transitionDelay = (i * 0.04) + 's';
+      el.appendChild(s);
+    });
+  });
+  setTimeout(()=>{
+    document.querySelectorAll('.split-char').forEach(s=>s.classList.add('in'));
+  }, 100);
+
+  /* ============== count up ============== */
+  function animateCount(el){
+    const to = +el.dataset.to;
+    const dur = 1400;
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min(1, (now - start)/dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(to * eased);
+      el.textContent = val.toLocaleString();
+      if(t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const cio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); }
+    });
+  }, {threshold:.5});
+  document.querySelectorAll('.count').forEach(el=>cio.observe(el));
+
+  /* ============== chatbot ============== */
+  const fab = document.getElementById('chatFab');
+  const panel = document.getElementById('chatPanel');
+  const body = document.getElementById('chatBody');
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('chatInput');
+  const quick = document.getElementById('chatQuick');
+
+  function addMsg(text, who){
+    const d = document.createElement('div');
+    d.className = 'msg ' + who;
+    d.textContent = text;
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+    return d;
+  }
+  function addTyping(){
+    const d = document.createElement('div');
+    d.className = 'msg typing';
+    d.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+    return d;
+  }
+
+  const KB = `あなたは「民泊駆けつけ代行 by MOSVA」のカスタマーサポートAIです。簡潔・丁寧な日本語で回答してください。返答は2〜4文程度。マークダウン記号は使わない。
+【サービス概要】旅館業・民泊新法対応の駆けつけ代行サービス。
+【サービス内容】施錠・防犯確認／応急の簡易清掃／水漏れ・軽微な電気トラブル／備品補充／クレームへの現場対応／保健所への名義登録。
+【料金プラン】
+・月額プラン：8,500円(税込)/月、初回登録料12,000円/部屋、月1回まで駆けつけ無料
+・年払いプラン：92,000円(税込)/年（月あたり約7,667円・年間10,000円お得）
+【追加費用】深夜帯(22時〜06時)は別途3,300円(税込)、月2回目以降の駆けつけは5,500円/回。
+【対応時間】到着まで180分以内（達成できなければ月額全額返金）。
+【支払い】クレジットカードのみ。
+【対応エリア】物件所在地により異なるためお問い合わせください。
+【保健所】名義登録・立ち合い面談・徒歩10分や2名体制などの自治体基準に対応。
+【その他】初回登録料は同一集合住宅3室まで有効。
+答えられない内容は「お問い合わせフォームからご相談ください」と案内。`;
+
+  async function reply(question){
+    const typing = addTyping();
+    try{
+      const ans = await window.claude.complete({
+        messages:[
+          {role:'user', content: KB + '\n\nユーザーの質問: ' + question}
+        ]
+      });
+      typing.remove();
+      addMsg(String(ans).trim(), 'bot');
+    }catch(err){
+      typing.remove();
+      addMsg('申し訳ございません、ただいま応答できません。お問い合わせフォームからご連絡ください。', 'bot');
+    }
+  }
+
+  function openChat(){
+    panel.classList.add('open');
+    fab.classList.add('open');
+    if(!body.dataset.greeted){
+      setTimeout(()=>addMsg('こんにちは！MOSVA駆けつけ代行のサポートAIです。料金や対応範囲について、お気軽にご質問ください 👋', 'bot'), 200);
+      body.dataset.greeted = '1';
+    }
+  }
+  function closeChat(){
+    panel.classList.remove('open');
+    fab.classList.remove('open');
+  }
+  fab.addEventListener('click', ()=>{
+    if(panel.classList.contains('open')) closeChat(); else openChat();
+  });
+  quick.addEventListener('click', (e)=>{
+    const b = e.target.closest('button[data-q]');
+    if(!b) return;
+    const q = b.dataset.q;
+    addMsg(q, 'user');
+    reply(q);
+  });
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const v = input.value.trim();
+    if(!v) return;
+    addMsg(v, 'user');
+    input.value = '';
+    reply(v);
+  });
+</script>
+
+</body>
+</html>
